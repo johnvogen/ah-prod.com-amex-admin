@@ -3,9 +3,9 @@
 var repository;
 var branch;
 var node;
-var repositoryId = 'e083f23fc5141afe5d22';
-var branchId = 'fcf1c3fb882fd40ecf97';
-var nodeId = '5b5019bc3683e8438699'; //counter node
+var repositoryId = 'f2c3571d7a2955e7f8a1';
+var branchId = '7935c19b649b9c399528';
+//var nodeId = '5b5019bc3683e8438699'; //counter node
 var schemaSource;
 var optionsSource;
 var dataSource;
@@ -30,12 +30,12 @@ function getPage(callback) {
     //                    }
 
     var config = {
-        "clientKey": "106d6b42-46e7-4f54-9a52-7ceed8e682b4",
-        "clientSecret": "It+QMtokAs7f8k5LB3hzgnNGnrR6n99/q3PpxkszdFNIVoU+BD6C7Y68s6S6fNiY2xgkSbBQlCpDJp98AWWPCap2MaNR+F6nk1H44gFAKCA=",
+        "clientKey": "1bd1ddc4-37c7-4c80-b69b-b0d8d226cc34",
+        "clientSecret": "CamxJ6k/aNYbuZVV1uTox0imFpsURRugGjt/AD77DGENmJ+U87Z1eh4KBdKtCcY8/Regd9DH8DYWGJ2mcdSCsK3a+aX1WR2ftnxQQ8yg6ck=",
         "username": username,
         "password": password,
         "baseURL": "https://api.cloudcms.com",
-        "application": "aab44469e1c69b575aad"
+        "application": "c8a4dc1dd5644f2934be"
     }
 
 
@@ -75,8 +75,7 @@ function getPage(callback) {
     });
 }
 
-var myData = {
-    /*"0fb318d0041cb9bd0a13": "test",*/
+var myData = {/*
     "5c5fb3b173fbb1185b4d": "medical",
     "1797d83ab34843aa7ab9": "medical-hmo",
     "52bbfd6e6174e9ca77f7": "credit-union",
@@ -100,13 +99,41 @@ var myData = {
     "252be9349d6efd0312d4": "new_hires",
     "89d455783efde8f39be7": "myResources",
     "21f5c2a082ab59f6391b": "401k-plan",
-    "67a22456135d7668e21a": "fsa-hsa",
-    /*"0ff355a9f5e994f836bc": "modern-family"*/
+    "67a22456135d7668e21a": "fsa-hsa"*/
+    "d9275c2e2cac27215841": "American Express",
+    "35fdcd1a842f9bd38093": "Be Healthier",
+    "24faf2f946aaaf4df61c": "Care for Family",
+    "e598bce4cbbc130ca67c": "Chat Money Expert",
+    "2f459081ab8e3cbe5e44": "Contact Us",
+    "baee9580b9b08558d6a1": "Core Benefits",
+    "5e9bfb25da6e1274d3bf": "Education Benefits",
+    "27936ab42ee296645389": "Family Expense",
+    "4504e3b77aa2bbd9592f": "Get Help Health Care",
+    "8399f467a5165c36718f": "Get Ready To Enroll",
+    "c4428f3933404834e0db": "Get Specialized Health",
+    "fc3b2067976ea86d472f": "Lower Expenses",
+    "1ff9c71fef8aadd38466": "Pregnancy Adoption Benefits",
+    "cd9b943b651016db032e": "Protect family Financially",
+    "9706e1042e10ba5483df": "Save For The Future",
+    "341faff00653a2a45b04": "See Doctor",
+    "8fc2f47c2238f5614da0": "Special Support For Family",
+    "fdc79e68d1f59a1c5c35": "Spend money"
+
 }
 
 $("#myDropdown").alpaca({
     "options": {
         "label": "What page would you like to edit?",
+        "type": "select",
+        //"dataSource": { "5c5fb3b173fbb1185b4d": "medical.html" }
+        "dataSource": myData
+    }
+});
+
+
+$("#myDropdownHistory").alpaca({
+    "options": {
+        "label": "What page would you like to revert?",
         "type": "select",
         //"dataSource": { "5c5fb3b173fbb1185b4d": "medical.html" }
         "dataSource": myData
@@ -148,20 +175,164 @@ function reShowForm() {
     node = branch.readNode(pageIdToLoad).then(function() {
 
         if (pageIdToLoad == "89d455783efde8f39be7") {
-            showResourcesForm();
+            //showResourcesForm();
         } else if (pageIdToLoad == "a3b3f7b9777c2b17d8fe") {
-            showEnrollmentForm();
+            //showEnrollmentForm();
         } else if (pageIdToLoad == "7b5c1d7200327b2be55a") {
-            showHomepageForm();
+            //showHomepageForm();
         } else {
-            showForm();
+            showAmexForm();
         }
 
+
+
+
     });
+
+
 }
 
 
+function showAmexForm() {
 
+    console.log("show amex form");
+    $("#myform").html("");
+    $("#myform").alpaca({
+        "view": "bootstrap-edit",
+        "data": node,
+        "schema": {
+            "title": "testAmex",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "title": "name"
+                },
+                "heading": {
+                    "type": "string",
+                    "title": "heading"
+                },
+                "title": {
+                    "type": "string",
+                    "title": "title"
+                },
+                "prefix": {
+                    "type": "string",
+                    "title": "prefix"
+                },
+                "flag": {
+                    "type": "string",
+                    "title": "flag"
+                },
+                "body": {
+                    "type": "string",
+                    "title": "body"
+                },
+                "topics": {
+                    "type": "array",
+                    "title": "Topics",
+                    "items": {
+                        "properties": {
+                            "topicHeader": {
+                                "type": "string",
+                                "title": "Topic Header"
+                            },
+                            "topicTitle1": {
+                                "type": "string",
+                                "title": "topicTitle1"
+                            },
+                            "items": {
+                                "type": "array",
+                                "title": "Sblob Items",
+                                "items": {
+                                    "type": "object",
+                                    "title": "Item",
+                                    "properties": {
+                                        "link": {
+                                            "type": "string",
+                                            "title": "item Link Url"
+                                        },
+                                        "sblob": {
+                                            "type": "string",
+                                            "title": "sblob Description"
+                                        }
+                                    }
+                                }
+                            },
+                            "rich_blobs": {
+                                "items": {
+                                    "type": "string",
+                                    "title": "rblobsItems"
+                                },
+                                "type": "array",
+                                "title": "rblobs"
+                            }
+                        },
+                        "type": "object"
+                    }
+                }
+            },
+            "_parent": "n:node",
+            "description": "custom:testame0",
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "items": {}
+        },
+        "options": {
+            "form": {
+                "buttons": {
+                    "submit": {
+                        "click": function () {
+                            clearTimer();
+                            console.log("Timer Cleared");
+                            setTimer();
+                            console.log("Timer Set");
+
+                            var value = this.getValue();
+                            //alert(JSON.stringify(value, null, "  "));
+                            node.name = value.name;
+                            node.heading = value.heading;
+                            node.title = value.title;
+                            node.prefix = value.prefix;
+                            node.flag = value.flag;
+                            node.body = value.body;
+                            node.topics = value.topics;
+                            node.update().then(function () {
+                                alert("Form Submitted")
+                            });
+                        }
+                    }
+                }
+            },
+            "title": "newPageTitle",
+            "engineId": "alpaca1",
+            "fields": {
+                "name": {
+                    "type": "text"
+                },
+                "heading": {
+                    "type": "text"
+                },
+                "title": {
+                    "type": "text"
+                },
+                "prefix": {
+                    "type": "text"
+                },
+                "flag": {
+                    "type": "text"
+                },
+                "body": {
+                    "type": "ckeditor"
+                },
+                "topics": {
+                    "options": {
+                        "actionBarType": "right"
+                    }
+                }
+            }
+        }
+    });
+}
 
 function showHomepageForm() {
 
@@ -868,8 +1039,8 @@ function checkCookie() {
 
     if (performance.navigation.type == 1) {
         console.log('page reloaded');
-        Gitana.deleteCookie("password", "/secure-bsc-admin");
-        Gitana.deleteCookie("username", "/secure-bsc-admin");
+        Gitana.deleteCookie("password", "/ah-prod.com-amex-admin");
+        Gitana.deleteCookie("username", "/ah-prod.com-amex-admin");
         Gitana.deleteCookie("password", "/localhost");
         Gitana.deleteCookie("username", "/localhost");
         Gitana.deleteCookie("password", "/");
@@ -927,8 +1098,8 @@ function setCredentialsFromLogin() {
 
 
 function logout() {
-    Gitana.deleteCookie("password", "/secure-bsc-admin");
-    Gitana.deleteCookie("username", "/secure-bsc-admin");
+    Gitana.deleteCookie("password", "/ah-prod.com-amex-admin");
+    Gitana.deleteCookie("username", "/ah-prod.com-amex-admin");
     Gitana.deleteCookie("password", "/localhost");
     Gitana.deleteCookie("username", "/localhost");
     Gitana.deleteCookie("password", "/");
@@ -966,3 +1137,6 @@ $("#uploadFilenameEdit5").on('change keyup paste mouseup', function() {
     $("#myFileName").html($("#uploadFilenameEdit5").val());
 });
 
+
+    $("[data-alpaca-container-item-name^='topics_0_topicHeader']:first-child").addClass("greenBackground");
+    $("[data-alpaca-container-item-name^='topics_0_topicHeader']").addClass("greenBackground");
