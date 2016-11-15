@@ -49,8 +49,35 @@
   background-color:red;
 }*/
 
+        .alpaca-form-button alpaca-form-button-Preview btn btn-default {
+            background-color: red;
+            width:100px;
 
-
+        }
+        .alpaca-form-button-Preview {
+            //background-color: red;
+            width:100px;
+                display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+        }
 
     </style>
     <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -74,7 +101,8 @@
     </script>
 </head>
 <body onload="checkCookie()">
-    <div class="container-fluid" style="background-color: #00467f; height: 91px">
+
+    <!--<div class="container-fluid" style="background-color: #00467f; height: 91px">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -83,7 +111,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
+
     <p id="logout" onclick="logout()" style="cursor: pointer">
         logout</p>
     <div id="loginContainer">
@@ -103,6 +132,11 @@
                 </div>
                 <div id="myform" style="display: block">
                 </div>
+
+
+
+
+
             </div>
             <div id="menu1" class="tab-pane fade">
                 <!-----------------------------------upload content goes here------------------>

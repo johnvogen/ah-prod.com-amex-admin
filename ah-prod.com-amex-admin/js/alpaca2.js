@@ -14,11 +14,14 @@ var pageIdToLoad;
 var username;
 var password;
 
+var value;
+var previewObject;
 
-
-
-
-
+var applicationId = 'c8a4dc1dd5644f2934be'; // to be provided for amex app
+var emailProviderId = '2c4497662def5cde8e96';//from amex app
+var workflowId = 'amexWorkflow';
+var projectId = '06fea8ff21b87b9e8358';
+var draftNodeId;
 //Switching from local developement to production will require switching config objects
 
 function getPage(callback) {
@@ -280,6 +283,47 @@ function showAmexForm() {
         "options": {
             "form": {
                 "buttons": {
+                    "Preview": {
+                        "click": function () {
+                            clearTimer();
+                            console.log("Timer Cleared");
+                            setTimer();
+                            console.log("Timer Set");
+
+                            value = this.getValue();
+                            
+                            var valueJson = JSON.stringify(value);
+                            console.log(valueJson);
+                            
+
+                            branch.createNode({
+                                "name": value.name,
+                                "heading": value.heading,
+                                "title": value.title,
+                                "prefix": value.prefix,
+                                "flag": 'amexPage1Draft',
+                                "body": value.body,
+                                "topics": value.topics,
+                                "_type": 'custom:testame0'
+                            }).then(function () {
+                                draftNodeId = this._doc;
+                                window.open('http://qa.aonhewittdev.com:10080/amextest/' + value.name + '.html' + '?draft=' + this._doc, '_blank');
+                            });
+
+                            //alert(JSON.stringify(value, null, "  "));
+
+                            //node.name = value.name;
+                            //node.heading = value.heading;
+                            //node.title = value.title;
+                            //node.prefix = value.prefix;
+                            //node.flag = value.flag;
+                            //node.body = value.body;
+                            //node.topics = value.topics;
+                            //node.update().then(function () {
+                            //    alert("Form Submitted")
+                            //});
+                        }
+                    },
                     "submit": {
                         "click": function () {
                             clearTimer();
@@ -287,18 +331,20 @@ function showAmexForm() {
                             setTimer();
                             console.log("Timer Set");
 
-                            var value = this.getValue();
+                            //var value = this.getValue();
                             //alert(JSON.stringify(value, null, "  "));
-                            node.name = value.name;
-                            node.heading = value.heading;
-                            node.title = value.title;
-                            node.prefix = value.prefix;
-                            node.flag = value.flag;
-                            node.body = value.body;
-                            node.topics = value.topics;
-                            node.update().then(function () {
-                                alert("Form Submitted")
-                            });
+
+                            //node.name = value.name;
+                            //node.heading = value.heading;
+                            //node.title = value.title;
+                            //node.prefix = value.prefix;
+                            //node.flag = value.flag;
+                            //node.body = value.body;
+                            //node.topics = value.topics;
+                            sendEmail(); //object must be created on cloudCMS before email can be sent
+                            //node.update().then(function () {
+                            //alert("Form Submitted")
+                            //});
                         }
                     }
                 }
@@ -332,7 +378,38 @@ function showAmexForm() {
             }
         }
     });
+
+    $('.alpaca-form-button-Preview').append('Preview');
 }
+
+function sendEmail() {
+    console.log("sending email with draft node Id of " + draftNodeId);
+
+    node.subchain(platform).then(function () {
+
+        var workflowConfig = {};
+        workflowConfig.context = {};
+        workflowConfig.context.projectId = projectId;
+        workflowConfig.payloadType = "content";
+        workflowConfig.payloadData = {
+            "repositoryId": repositoryId,
+            "branchId": branchId
+        };
+        workflowConfig.runtime = {};
+        workflowConfig.runtime.applicationId = applicationId;
+        workflowConfig.runtime.emailProviderId = emailProviderId;
+        platform.createWorkflow(workflowId, workflowConfig).then(function () {
+            this.addResource(node);
+            var data = {
+                "draftNodeId": draftNodeId
+            }
+            this.start(data).then(function () {
+
+            });
+        });
+    });
+}
+
 
 function showHomepageForm() {
 
@@ -1140,3 +1217,9 @@ $("#uploadFilenameEdit5").on('change keyup paste mouseup', function() {
 
     $("[data-alpaca-container-item-name^='topics_0_topicHeader']:first-child").addClass("greenBackground");
     $("[data-alpaca-container-item-name^='topics_0_topicHeader']").addClass("greenBackground");
+
+
+    function myButton() {
+        alert(node.title);
+
+    }
